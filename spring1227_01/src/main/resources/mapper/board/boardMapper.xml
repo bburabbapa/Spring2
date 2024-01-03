@@ -1,0 +1,44 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MemberMapper.java 연결 -->
+<mapper namespace="com.java.www.mapper.BoardMapper">
+   <select id="selectAll" resultType="com.java.www.dto.BoardDto">
+      select * from
+      (select row_number() over(order by bgroup desc,bstep asc) rnum,a.* from board a)
+      where rnum between 1 and 10
+   </select>
+   
+   <select id="selectOne" resultType="com.java.www.dto.BoardDto">
+      select * from board where bno=#{bno}
+   </select>
+   
+   <select id="bCommentSelectAll" resultType="com.java.www.dto.BCommentDto">
+      select * from ecomment where bno=#{bno} order by cno desc
+   </select>
+   
+   <insert id="bCommentInsert">
+     <selectKey resultType="com.java.www.dto.BCommentDto" keyProperty="cno,cdate" order="BEFORE">
+        select ecomment_seq.nextval cno,sysdate cdate from dual
+     </selectKey>
+     insert into ecomment values (#{cno},#{bno},#{id},#{cpw},#{ccontent},#{cdate} )
+   </insert>
+   
+   <select id="bCommentSelectOne" resultType="com.java.www.dto.BCommentDto">
+     select * from ecomment where cno=#{cno}
+   </select>
+   
+   <delete id="bCommentDelete">
+     delete ecomment where cno=#{cno}
+   </delete>
+   
+   <update id="BCommentUpdate">
+     update ecomment set ccontent=#{ccontent},cdate=sysdate where cno=#{cno}
+   </update>
+   
+  
+   
+   
+   
+</mapper>
