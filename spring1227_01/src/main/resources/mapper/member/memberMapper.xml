@@ -22,7 +22,5 @@
   <select id="idsearch" resultType="com.java.www.dto.MemberDto2">
      select * from member2 where name=#{name} and email=#{email}
   </select>
-   
-   
-   
+
 </mapper>

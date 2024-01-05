@@ -36,6 +36,8 @@ public class MServiceImpl implements MService {
 		return result;
 	}
 
+	
+	
 	@Override //비밀번호찾기 - 아이디,이메일 검색
 	public String pwsearch(String id, String email) {
 		MemberDto2 mDto2 = memberMapper.pwsearch(id,email);
