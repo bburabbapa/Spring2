@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MemberMapper.java 연결 -->
+<mapper namespace="com.java.mapper.BoardMapper">
+   <!-- 게시글 전체가져오기 -->
+   <select id="selectAll" resultType="com.java.dto.BoardDto">
+      select * from (
+        select row_number() over(order by bgroup desc,bstep asc) rnum, a.* from board2 a
+      ) where rnum between 1 and 20
+   </select>
+   
+   <!-- 글쓰기 저장 -->
+   <insert id="bwrite">
+     insert into board2 values (board_seq.nextval,#{btitle},#{bcontent},
+     sysdate,#{id},board_seq.currval,0,0,1,#{bfile})
+   </insert>
+   
+   <!-- 게시글 1개 가져오기 -->
+   <select id="selectOne" resultType="com.java.dto.BoardDto">
+      select * from board2 where bno=#{bno}
+   </select>
+   
+  
+   
+   
+   
+</mapper>
